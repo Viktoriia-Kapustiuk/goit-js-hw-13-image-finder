@@ -4,13 +4,10 @@ import refs from './refs.js';
 refs.galleryUl.addEventListener('click', openLargeImage);
 
 function openLargeImage(event) {
-    if (event.target.nodeName !== "IMG") {
-        return;
-    }
-    const largeImageURL = event.target.dataset.source;
-    _openMobalBasic(largeImageURL);
-}
-
-function _openMobalBasic(url) {
-    basicLightbox.create(`<img src="${url}" width="1600" height="900">`).show();
+  event.preventDefault();
+  if (event.target.nodeName !== 'IMG') {
+    return;
+  }
+  const instance = basicLightbox.create(`<img src="${event.target.dataset.source}"/>`).show();
+  instance.show();
 }

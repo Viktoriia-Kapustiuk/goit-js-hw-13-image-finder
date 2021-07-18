@@ -1,7 +1,7 @@
 const refs = {
-    searcForm: document.querySelector('#search-form'),
+    searchForm: document.querySelector('input'),
     galleryUl: document.querySelector('.gallery'),
-    loadMore: document.querySelector('.js-button'),
+    loadMore: document.getElementById('my-element-selector')
 };
 
 export default refs;

@@ -1,29 +1,46 @@
 import { error } from './notification.js';
-export default {
-    page: 1,
-    search: '',
-    perPage: 12,
-    APIkey: '22450906-3e002c9d2b529a68e38cedb68',
-    baseURL: "https://pixabay.com/api/?image_type=photo&orientation=horizontal&q",
-    async getResourse() {
-        try {
-            const responce = await fetch(`${this.baseURL}=${this.search}
-      &page=${this.page}&perPage=${this.perPage}&key=${this.APIkey}`);
-            this.page += 1;
+export default class apiService {
+  constructor() {
+    this.page = 1;
+    this.search = '';
+  }
 
-            return await responce.json();
+  getResourse() {
+    const APIkey = '22552385-48cbfc230869fd9c0db486b86';
+    const baseURL = 'https://pixabay.com/api/';
+    const workLink = `${baseURL}?image_type=photo&orientation=horizontal&q=${this.search}
+        &page=${this.page}&per_page=12&key=${APIkey}`;
+    return fetch(workLink)
+      .then(r => {
+        if (r.ok) {
+          return r.json();
         }
-        catch (err) {
-            throw error({
-                text: (`Ошибка по ${this.search} статус${this.status}`),
-                hide: true,
-                delay: 3000,
-            });
-
+      })
+      .then(({ hits }) => {
+        if (hits.length === 0) {
+          error({
+            text: 'Ошибка ввода, проверьте правильность ввода',
+            hide: true,
+            delay: 3000,
+          });
+        } else {
+          this.addPage();
+          return hits;
         }
-    },
-    resetPage() {
-        this.page = 1;
-    },
+      });
+  }
+  addPage() {
+    this.page += 1;
+  }
 
-};
+  resetPage() {
+    this.page = 1;
+    }
+    get searcher() {
+        return this.search;
+    }
+
+    set searcher(newValue) {
+        this.search = newValue;
+    }
+}
