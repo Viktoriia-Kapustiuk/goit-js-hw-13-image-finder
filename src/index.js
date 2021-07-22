@@ -38,12 +38,12 @@ function error() {
 function fetchImg(event) {
     event.preventDefault();
     clearPage();
-    imgSearcher.searcher = event.target.value;
-    if (imgSearcher.searcher === "") {
+    imgSearcher.search = event.target.value;
+    if (imgSearcher.search === "") {
         clearPage();
         alert({text: 'Уточните ваш запрос'})
     } else {
-        imgSearcher.getResource().then(galleryRender).catch(error);
+        imgSearcher.getResourse().then(galleryRender).catch(error);
     }
     imgSearcher.resetPage();
 }
